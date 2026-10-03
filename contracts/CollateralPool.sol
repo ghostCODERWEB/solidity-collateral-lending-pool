@@ -115,7 +115,7 @@ contract CollateralPool is ERC20, SuiteBase {
         emit Repaid(account, amount);
     }
     function removeCollateral(uint256 amount) external nonReentrant {
-        _fresh();
+        if (debt[msg.sender] > 0) _fresh();
         require(amount > 0 && amount <= collateral[msg.sender], "collateral");
         uint256 remaining = collateral[msg.sender] - amount;
         require(

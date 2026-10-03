@@ -32,4 +32,12 @@ export async function suite(h) {
     h.ok((await c.debt(h.addresses[1])) < 500n);
     h.ok((await c.collateral(h.addresses[1])) < 1000n);
   });
+  await h.test("debt-free collateral exits during oracle outage", async () => {
+    const amount = await c.debt(h.addresses[1]);
+    if (amount > 0n) await h.tx(c.repay(h.addresses[1], amount));
+    await h.mine(101);
+    const remaining = await c.collateral(h.addresses[1]);
+    await h.tx(c.connect(h.signers[1]).removeCollateral(remaining));
+    h.eq(await c.collateral(h.addresses[1]), 0n);
+  });
 }
