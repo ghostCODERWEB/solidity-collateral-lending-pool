@@ -1,0 +1,13 @@
+{
+  "name": "solidity-collateral-lending-pool",
+  "title": "Collateralized token lending pool",
+  "contract": "CollateralPool",
+  "description": "Pooled ERC20 loans against native collateral with stale-oracle checks, bounded liquidation and share accounting.",
+  "args": [
+    "$TOKEN",
+    "2000000000000000000",
+    3600,
+    "$ADMIN"
+  ],
+  "assumptions": "Zero-interest lending with native collateral and a centralized owner-updated price. Price units are loan base units per 1e18 native units. LP redemption depends on liquid pool balance. Liquidation can be partial; tiny residual collateral can cause debt writeoff. Not intended for live financial use without oracle integration and review."
+}
